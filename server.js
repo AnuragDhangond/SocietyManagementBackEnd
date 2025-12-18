@@ -8,6 +8,11 @@ const connectDB = require("./config/db");
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("Society Backend is Live 🚀");
+});
+
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
