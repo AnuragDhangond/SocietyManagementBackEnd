@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const SignupSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
-  mobile: Number,
+  mobile: String,
   password: String
 }, { timestamps: true });
 
