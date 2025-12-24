@@ -5,7 +5,7 @@ const Maintenance = require("../models/Maintenance");
 const Member = require("../models/Member");
 
 /* ===============================
-   ADD / UPDATE MAINTENANCE
+   ADD MAINTENANCE (ADMIN)
 ================================ */
 router.post("/add", async (req, res) => {
   try {
@@ -15,12 +15,11 @@ router.post("/add", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Ensure types
     const flatValue = String(flat).trim();
     const wingValue = String(wing).trim();
     const numericAmount = Number(amount);
 
-    // 🔎 Find member
+    // 🔎 Validate member
     const member = await Member.findOne({
       address: flatValue,
       services: wingValue
@@ -32,7 +31,6 @@ router.post("/add", async (req, res) => {
       });
     }
 
-    // 🔎 Find maintenance doc
     let maintenance = await Maintenance.findOne({
       flat: flatValue,
       wing: wingValue
@@ -85,7 +83,7 @@ router.post("/add", async (req, res) => {
 });
 
 /* ===============================
-   GET ALL MAINTENANCE
+   GET ALL MAINTENANCE (ADMIN)
 ================================ */
 router.get("/", async (req, res) => {
   try {
@@ -98,5 +96,50 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
+/* ===============================
+   GET MAINTENANCE BY FLAT (MEMBER)
+================================ */
+// GET MAINTENANCE BY FLAT (MEMBER)
+router.get("/flat", async (req, res) => {
+  try {
+    const { flat, wing } = req.query;
+
+    if (!flat || !wing) {
+      return res.status(400).json({ message: "Flat and wing are required" });
+    }
+
+    const member = await Member.findOne({
+      address: flat.trim(),
+      services: wing.trim()
+    });
+
+    if (!member) {
+      return res.status(404).json({
+        message: "Flat not registered. Contact administrator."
+      });
+    }
+
+    const maintenance = await Maintenance.findOne({
+      flat: flat.trim(),
+      wing: wing.trim()
+    });
+
+    res.status(200).json({
+      member: {
+        name: member.name,
+        email: member.email,
+        mobile: member.mobile,
+        flat: member.address,
+        wing: member.services
+      },
+      records: maintenance ? maintenance.records : []
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;

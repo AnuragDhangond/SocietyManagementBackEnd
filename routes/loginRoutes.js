@@ -15,20 +15,21 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid Email" });
     }
 
-    //  Compare password
+    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid Password" });
     }
 
-    //  SUCCESS
+    // ✅ SEND ROLE ALSO
     res.status(200).json({ 
       message: "Login Success", 
       user: {
+        id: user._id,
         name: user.name,
         email: user.email,
         mobile: user.mobile,
-        id: user._id
+        role: user.role          // 🔥 THIS WAS MISSING
       }
     });
 

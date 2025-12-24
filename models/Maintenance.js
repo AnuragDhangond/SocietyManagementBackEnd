@@ -60,9 +60,7 @@ const maintenanceSchema = new mongoose.Schema(
       default: 0
     }
   },
-  {
-    timestamps: true
-  }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Maintenance", maintenanceSchema);
