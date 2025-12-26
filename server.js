@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
+const expenseRoutes = require('./routes/expenseRoutes');
 const connectDB = require("./config/db");
 
 const app = express();
@@ -26,6 +26,7 @@ app.use("/api/signup", require("./routes/signupRoutes"));
 app.use("/api/login", require("./routes/loginRoutes"));
 app.use("/api/maintenance", require("./routes/maintenanceRoutes"));
 app.use("/api/complaints", require("./routes/complaintRoutes"));
+app.use('/api/expenses', expenseRoutes);
 
 // START SERVER
 const PORT = process.env.PORT || 5000;
