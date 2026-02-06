@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Expense = require('../models/Expense');
 
-// 🔹 GET ALL EXPENSES (ADMIN + MEMBER)
+//  GET ALL EXPENSES (ADMIN + MEMBER)
 router.get('/', async (req, res) => {
   try {
     const expenses = await Expense.find().sort({ date: -1 });
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 🔹 ADD EXPENSE (ADMIN ONLY)
+// ADD EXPENSE (ADMIN ONLY)
 router.post('/', async (req, res) => {
   try {
     const expense = new Expense(req.body);
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// 🔹 UPDATE EXPENSE (ADMIN ONLY)
+//  UPDATE EXPENSE (ADMIN ONLY)
 router.put('/:id', async (req, res) => {
   try {
     const updated = await Expense.findByIdAndUpdate(
@@ -37,7 +37,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// 🔹 DELETE EXPENSE (ADMIN ONLY)
+//  DELETE EXPENSE (ADMIN ONLY)
 router.delete('/:id', async (req, res) => {
   try {
     await Expense.findByIdAndDelete(req.params.id);

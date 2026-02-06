@@ -3,24 +3,24 @@ const mongoose = require("mongoose");
 /* ===============================
    MONTHLY MAINTENANCE RECORD
 ================================ */
-const maintenanceRecordSchema = new mongoose.Schema(
-  {
-    month: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    year: {
-      type: Number,
-      required: true
-    },
-    amount: {
-      type: Number,
-      required: true
-    }
+const maintenanceRecordSchema = new mongoose.Schema({
+  month: String,
+  year: Number,
+  amount: Number,
+
+  // 🔐 NEW FIELDS (SAFE)
+  status: {
+    type: String,
+    enum: ["PAID", "REVERSED"],
+    default: "PAID"
   },
-  { _id: false }
-);
+  createdBy: {
+    type: String,
+    default: "admin"
+  },
+  reversedAt: Date
+});
+
 
 /* ===============================
    MAIN MAINTENANCE SCHEMA
