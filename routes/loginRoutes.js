@@ -21,15 +21,17 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid Password" });
     }
 
-    // ✅ SEND ROLE ALSO
-    res.status(200).json({ 
-      message: "Login Success", 
+    // SEND ROLE + FLAT + WING
+    res.status(200).json({
+      message: "Login Success",
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
         mobile: user.mobile,
-        role: user.role          // 🔥 THIS WAS MISSING
+        role: user.role,
+        flat: user.flat,
+        wing: user.wing
       }
     });
 

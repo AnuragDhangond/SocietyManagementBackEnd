@@ -22,6 +22,14 @@ const SignupSchema = new mongoose.Schema({
     type: String,
     enum: ["admin", "member"],
     default: "member"
+  },
+  flat: {
+    type: Number,
+    default: null
+  },
+  wing: {
+    type: String,
+    default: null
   }
 }, { timestamps: true });
 
